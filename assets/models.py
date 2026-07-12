@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.db.models import F
 
 # Create your models here.
 class Product(models.Model):
@@ -97,3 +98,28 @@ class StockMovement(models.Model):
 
     def __str__(self):
         return f"{self.get_movement_type_display()} - {self.product.name} ({self.quantity})"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            product = self.product
+            if self.movement_type == 'IN':
+                Product.objects.filter(pk=product.pk).update(
+                    stock_quantity=F('stock_quantity') + self.quantity
+                )
+            elif self.movement_type == 'OUT':
+                Product.objects.filter(pk=product.pk).update(
+                    stock_quantity=F('stock_quantity') - self.quantity
+                )
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        product = self.product
+        if self.movement_type == 'IN':
+            Product.objects.filter(pk=product.pk).update(
+                stock_quantity=F('stock_quantity') - self.quantity
+            )
+        elif self.movement_type == 'OUT':
+            Product.objects.filter(pk=product.pk).update(
+                stock_quantity=F('stock_quantity') + self.quantity
+            )
+        super().delete(*args, **kwargs)
