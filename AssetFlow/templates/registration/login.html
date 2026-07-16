@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar sesión — AssetFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center mb-4">
+          <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+        </h2>
+        {% include '_includes/_form.html' with form=form button_text='Entrar' button_icon='box-arrow-in-right' button_class='w-100' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
