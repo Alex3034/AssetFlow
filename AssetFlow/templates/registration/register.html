@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear cuenta — AssetFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center mb-4">
+          <i class="bi bi-person-plus"></i> Crear cuenta
+        </h2>
+        {% include '_includes/_form.html' with form=form button_text='Crear cuenta' button_icon='person-plus' button_class='w-100' %}
+        <p class="text-center mt-3 mb-0">
+          ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
