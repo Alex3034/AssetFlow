@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+
+<form method="{{ method|default:'post' }}" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %} novalidate>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <div class="mt-3">
+    <button type="submit" class="btn btn-{{ button_color|default:'primary' }} {{ button_class|default:'' }}">
+      <i class="bi bi-{{ button_icon|default:'check-lg' }}"></i> {{ button_text|default:'Guardar' }}
+    </button>
+    {% if cancel_url %}
+    <a href="{{ cancel_url }}" class="btn btn-secondary">
+      <i class="bi bi-x-lg"></i> Cancelar
+    </a>
+    {% endif %}
+  </div>
+</form>
